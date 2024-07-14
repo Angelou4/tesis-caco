@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Recomendación{% endblock title %}
+{% block content %}
+<div class="container3">
+    <p>Datos adicionales</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Avance acumulado</th>
+                <th>Avance mes</th>
+                <th>Mes porcentaje</th>
+                <th>Dotacion mes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tupla in tuplas_completas %}
+            <tr>
+                <td>{{ tupla.mes }}</td>
+                <td>{{ tupla.avance_acumulado }}</td>
+                <td>{{ tupla.avance_mes }}</td>
+                <td>{{ tupla.porcentaje }}%</td>
+                <td>{{ tupla.dotacion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button onClick="javascript:history.go(-1);" class="btn btn-primary">Regresar</button>
+</div>
+{% endblock %}

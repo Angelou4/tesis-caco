@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Que necesitas?{% endblock title %}
+{% block content %}
+    {% if request.user.is_authenticated %} 
+        <a href="{% url 'logout' %}">Salir</a>
+    {% endif %}
+    <section class="py-3 py-md-5">
+        <div class="row justify-content-lg-center">
+            <div class="container center">
+                <h1>Que necesitas?</h1>
+                <button class="btn btn-primary" onclick="redireccionarIzquierda()">Nueva Obra</button>
+                <button class="btn btn-primary" onclick="redireccionarDerecha()">Mis Obras</button>
+            </div>
+        </div>
+    </section>
+{% block javascipt %}
+
+    <script>
+        function redireccionarIzquierda() {
+            {% if request.user.is_authenticated %} 
+            window.location.href = "/nueva_obra"; 
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            window.location.href = "/login/"; 
+            {% endif %} 
+        } 
+        function redireccionarDerecha() {
+            {% if request.user.is_authenticated %} 
+            window.location.href = "/obras_existentes"; 
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            window.location.href = "/login/"; 
+            {% endif %}
+        }
+    </script>
+{% endblock javascipt%}
+{% endblock content%}
+</html>

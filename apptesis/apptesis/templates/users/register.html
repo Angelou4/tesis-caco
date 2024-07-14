@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro{% endblock title %}
+
+{% block content %}
+<section class="py-3 py-md-5">
+	<div class="container" id="formContainer">
+		<div class="row justify-content-lg-center">
+			<form method="POST" novalidate>
+				{% csrf_token %}
+				<h2>Registro</h2>
+				{{ form.as_p }}		
+				<button type="submit" class="btn btn-primary">Register</button>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock content%}
