@@ -1,9 +1,9 @@
 ```console
-python3 -m venv venv <br/>
-venv\Scripts\activate <br/>
-pip install -r requirements.txt <br/>
-cd apptesis <br/>
-python manage.py makemigrations <br/>
-python manage.py migrate <br/>
-python manage.py runserer <br/>
+python3 -m venv venv 
+venv\Scripts\activate 
+pip install -r requirements.txt 
+cd apptesis 
+python manage.py makemigrations 
+python manage.py migrate 
+python manage.py runserer 
 ```
