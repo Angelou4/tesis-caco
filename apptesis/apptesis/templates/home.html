@@ -10,29 +10,33 @@
                 <h1>Que necesitas?</h1>
                 <button class="btn btn-primary" onclick="redireccionarIzquierda()">Nueva Obra</button>
                 <button class="btn btn-primary" onclick="redireccionarDerecha()">Mis Obras</button>
+                <button class="btn btn-primary" onclick="redireccionarNuevoProyecto()">Nuevo Proyecto</button>
             </div>
         </div>
     </section>
-{% block javascipt %}
-
+{% block javascript %}
     <script>
         function redireccionarIzquierda() {
             {% if request.user.is_authenticated %} 
-            window.location.href = "/nueva_obra"; 
-            {% endif %}
-            {% if not request.user.is_authenticated %}
+            window.location.href = "/nuevaObra/"; 
+            {% else %}
             window.location.href = "/login/"; 
             {% endif %} 
         } 
         function redireccionarDerecha() {
             {% if request.user.is_authenticated %} 
-            window.location.href = "/obras_existentes"; 
+            window.location.href = "/myObras/"; 
+            {% else %}
+            window.location.href = "/login/"; 
             {% endif %}
-            {% if not request.user.is_authenticated %}
+        }
+        function redireccionarNuevoProyecto() {
+            {% if request.user.is_authenticated %} 
+            window.location.href = "/nuevoProyecto/"; 
+            {% else %}
             window.location.href = "/login/"; 
             {% endif %}
         }
     </script>
-{% endblock javascipt%}
-{% endblock content%}
-</html>
+{% endblock javascript %}
+{% endblock content %}

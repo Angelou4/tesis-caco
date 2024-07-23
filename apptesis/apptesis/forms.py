@@ -21,8 +21,12 @@ class RegisterForm(UserCreationForm):
         model=Persona
         fields = ['username','email','password1','password2']
 
+class nuevoProyectoForm(forms.ModelForm):
+    class Meta:
+        model = Proyecto
+        fields = ['nombre']
 
 class nuevaObraForm(forms.ModelForm):
     class Meta:
         model = Obra
-        fields = ['obra','encargado','tamano','duracion', 'dotacion_max','precio_agua']
+        fields = ['obra','encargado','tamano','duracion', 'dotacion_max','precio_agua', 'proyecto']

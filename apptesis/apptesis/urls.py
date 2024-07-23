@@ -26,4 +26,5 @@ urlpatterns = [
     path('myObras/', views.obras_existentes, name='obras_existentes'),
     path('obraMas/<int:obra_id>/', views.obra_mas, name='obra_mas'),
     path('nuevaObra/', views.nueva_obra, name='nueva_obra'),
+    path('nuevoProyecto/', views.nuevo_proyecto, name='nuevo_proyecto'),
 ]

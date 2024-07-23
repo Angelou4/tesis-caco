@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load custom_filters %}
 {% block title %}Recomendación{% endblock title %}
 {% block content %}
 <div class="container3">
@@ -27,6 +28,134 @@
         </tbody>
     </table>
 
+    <canvas id="dotacionChart"></canvas>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Dotacion</th>
+                <th>Consumo estimado por persona (litros)</th>
+                <th>Consumo estimado por días (litros)</th>
+                <th>Días hábiles</th>
+                <th>Consumo estimado por mes (litros)</th>
+                <th>Precio del agua por litro</th>
+                <th>Ahorro</th>
+                <th>Ahorro acumulado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in nueva_tabla %}
+            <tr>
+                <td>{{ row.mes }}</td>
+                <td>{{ row.dotacion }}</td>
+                <td>{{ row.consumo_por_persona }}</td>
+                <td>{{ row.consumo_por_dias }}</td>
+                <td>{{ row.dias_habiles }}</td>
+                <td>{{ row.consumo_por_mes_litros|format_currency }}</td>
+                <td>{{ row.precio_agua_por_litro }}</td>
+                <td>{{ row.ahorro|format_currency }}</td>
+                <td>{{ row.ahorro_acumulado|format_currency }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total Ahorro: {{ ahorro_total|format_currency }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Compra de planta de tratamiento</th>
+                <th>Desconección de planta</th>
+                <th>Retiro de planta</th>
+                <th>Reinstalación de planta</th>
+                <th>Cierre y techumbre</th>
+                <th>Mantenciones completas al año</th>
+                <th>Mantenciones preventivas al año</th>
+                <th>Mantenciones mensuales</th>
+                <th>Pastillas de Cloro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tabla_costos %}
+            <tr>
+                <td>{{ row.mes }}</td>
+                <td>{{ row.compra_planta|format_currency }}</td>
+                <td>{{ row.desconeccion_planta|format_currency }}</td>
+                <td>{{ row.retiro_planta|format_currency }}</td>
+                <td>{{ row.reinstalacion_planta|format_currency }}</td>
+                <td>{{ row.cierre_techumbre|format_currency }}</td>
+                <td>{{ row.mantencion_completa|format_currency }}</td>
+                <td>{{ row.mantencion_preventiva|format_currency }}</td>
+                <td>{{ row.mantencion_mensual|format_currency }}</td>
+                <td>{{ row.pastillas_cloro|format_currency }}</td>
+                <td>{{ row.costo_mensual|format_currency }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Total Costos: {{ total_costos|format_currency }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Flujo de Caja</th>
+                <th>Flujo de Caja Acumulado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in flujo_caja %}
+            <tr>
+                <td>{{ item.mes }}</td>
+                <td>{{ item.flujo_caja|format_currency }}</td>
+                <td>{{ item.flujo_caja_acumulado|format_currency }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Tasa Interna de Retorno (TIR): {{ tir|floatformat:2 }}%</h3>
+    
     <button onClick="javascript:history.go(-1);" class="btn btn-primary">Regresar</button>
 </div>
+
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('dotacionChart').getContext('2d');
+        var meses = [];
+        var dotaciones = [];
+
+        {% for tupla in tuplas_completas %}
+            meses.push('{{ tupla.mes }}');
+            dotaciones.push('{{ tupla.dotacion }}');
+        {% endfor %}
+
+        var dotacionChart = new Chart(ctx, {
+            type: 'line', // Cambiado a tipo de gráfico de línea
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Dotación por Mes',
+                    data: dotaciones,
+                    fill: false, // Sin relleno debajo de la línea
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1 // Tensión de la curva de la línea
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock javascript %}
 {% endblock %}

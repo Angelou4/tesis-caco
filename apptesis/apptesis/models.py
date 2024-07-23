@@ -13,6 +13,13 @@ class Persona(AbstractUser):
     def __str__(self):
         return self.first_name + ' ' + self.last_name + f' ({self.username})'
 
+class Proyecto(models.Model):
+    nombre = models.CharField(max_length=100)
+    # Otros campos de Proyecto si los hay
+
+    def __str__(self):
+        return self.nombre
+
 tamaños = [('Pequeña', 'Pequeña'), ('Mediana', 'Mediana'), ('Grande', 'Grande')]
 
 class Obra(models.Model):
@@ -23,6 +30,10 @@ class Obra(models.Model):
     duracion = models.IntegerField()
     dotacion_max = models.IntegerField()
     precio_agua = models.FloatField()
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, null=True)
+    es_primero = models.BooleanField(default=False)
+    deuda = models.IntegerField(default=0)
     
+
     def __str__(self):
         return f'{self.obra} ({self.encargado})'
